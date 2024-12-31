@@ -171,32 +171,60 @@ input[type="range"]::-webkit-slider-thumb:hover {
   margin-top: 2rem;
   overflow-x: auto;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  font-size: 0.95rem;
 }
 
 th, td {
   padding: 1rem;
   text-align: right;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-th {
-  background: #f8fafc;
-  font-weight: 600;
-  color: #64748b;
 }
 
 th:first-child, td:first-child {
   text-align: left;
 }
 
-tr:hover {
+/* 다크모드 테이블 스타일 */
+.dark-theme .table-container {
+  background: #1e293b;
+}
+
+.dark-theme table th {
+  background: #334155;
+  color: #94a3b8;
+  border-bottom: 1px solid #475569;
+}
+
+.dark-theme table td {
+  color: #e2e8f0;
+  border-bottom: 1px solid #334155;
+}
+
+.dark-theme tr:hover {
+  background: #334155;
+}
+
+/* 라이트모드 테이블 스타일 */
+.light-theme .table-container {
+  background: white;
+}
+
+.light-theme table th {
+  background: #f8fafc;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.light-theme table td {
+  color: #1a1a1a;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.light-theme tr:hover {
   background: #f8fafc;
 }
 
