@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -24,9 +24,18 @@ ChartJS.register(
 
 function App() {
   const [principal, setPrincipal] = useState(10000000);
-  const [years, setYears] = useState(0.5);
+  const [years, setYears] = useState(5);
   const [rate, setRate] = useState(30);
   const [viewMode, setViewMode] = useState('chart');
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? savedTheme === 'dark' : true;
+  });
+
+  useEffect(() => {
+    document.body.className = isDarkMode ? 'dark-theme' : 'light-theme';
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   const yearsToMonths = (years) => Math.round(years * 12);
   
@@ -65,23 +74,23 @@ function App() {
       {
         label: '예상 총 자산',
         data: getAllPeriodReturns().map(r => r.amount),
-        borderColor: '#2563eb',
-        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+        borderColor: isDarkMode ? '#60a5fa' : '#2563eb',
+        backgroundColor: isDarkMode ? 'rgba(96, 165, 250, 0.1)' : 'rgba(37, 99, 235, 0.1)',
         fill: true,
         tension: 0.4,
         pointRadius: 4,
-        pointBackgroundColor: '#2563eb',
-        pointBorderColor: '#ffffff',
+        pointBackgroundColor: isDarkMode ? '#60a5fa' : '#2563eb',
+        pointBorderColor: isDarkMode ? '#1e293b' : '#ffffff',
         pointBorderWidth: 2,
         pointHoverRadius: 6,
-        pointHoverBackgroundColor: '#2563eb',
-        pointHoverBorderColor: '#ffffff',
+        pointHoverBackgroundColor: isDarkMode ? '#3b82f6' : '#2563eb',
+        pointHoverBorderColor: isDarkMode ? '#e2e8f0' : '#ffffff',
         pointHoverBorderWidth: 2,
       },
       {
         label: '투자 원금',
         data: getAllPeriodReturns().map(() => principal),
-        borderColor: '#94a3b8',
+        borderColor: isDarkMode ? '#475569' : '#94a3b8',
         borderDash: [5, 5],
         tension: 0.4,
         pointRadius: 0,
@@ -98,6 +107,7 @@ function App() {
         labels: {
           usePointStyle: true,
           padding: 20,
+          color: isDarkMode ? '#e2e8f0' : '#1a1a1a',
           font: {
             family: "'Pretendard', sans-serif",
             size: 12,
@@ -108,6 +118,7 @@ function App() {
       title: {
         display: true,
         text: '기간별 예상 수익 추이',
+        color: isDarkMode ? '#e2e8f0' : '#1a1a1a',
         font: {
           family: "'Pretendard', sans-serif",
           size: 16,
@@ -119,14 +130,14 @@ function App() {
         }
       },
       tooltip: {
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        titleColor: '#1a1a1a',
+        backgroundColor: isDarkMode ? 'rgba(30, 41, 59, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+        titleColor: isDarkMode ? '#e2e8f0' : '#1a1a1a',
         titleFont: {
           family: "'Pretendard', sans-serif",
           size: 14,
           weight: 'bold'
         },
-        bodyColor: '#1a1a1a',
+        bodyColor: isDarkMode ? '#e2e8f0' : '#1a1a1a',
         bodyFont: {
           family: "'Pretendard', sans-serif",
           size: 13
@@ -134,7 +145,7 @@ function App() {
         padding: 12,
         boxPadding: 6,
         usePointStyle: true,
-        borderColor: '#e2e8f0',
+        borderColor: isDarkMode ? '#334155' : '#e2e8f0',
         borderWidth: 1,
         callbacks: {
           label: function(context) {
@@ -156,19 +167,7 @@ function App() {
     scales: {
       x: {
         grid: {
-          display: false
-        },
-        ticks: {
-          font: {
-            family: "'Pretendard', sans-serif",
-            size: 12
-          },
-          color: '#64748b'
-        }
-      },
-      y: {
-        grid: {
-          color: '#e2e8f0',
+          color: isDarkMode ? '#1e293b' : '#e2e8f0',
           drawBorder: false
         },
         ticks: {
@@ -176,7 +175,20 @@ function App() {
             family: "'Pretendard', sans-serif",
             size: 12
           },
-          color: '#64748b',
+          color: isDarkMode ? '#94a3b8' : '#64748b'
+        }
+      },
+      y: {
+        grid: {
+          color: isDarkMode ? '#1e293b' : '#e2e8f0',
+          drawBorder: false
+        },
+        ticks: {
+          font: {
+            family: "'Pretendard', sans-serif",
+            size: 12
+          },
+          color: isDarkMode ? '#94a3b8' : '#64748b',
           callback: function(value) {
             return new Intl.NumberFormat('ko-KR', {
               style: 'currency',
@@ -195,22 +207,23 @@ function App() {
       line: {
         borderWidth: 3
       }
-    },
-    layout: {
-      padding: {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10
-      }
     }
   };
 
   return (
-    <div className="App">
+    <div className={`App ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
       <div className="container">
-        <h1>투자 수익 계산기</h1>
-        <div className="card calculator">
+        <div className="header">
+          <h1>투자 수익 계산기</h1>
+          <button 
+            className="theme-toggle"
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            aria-label="테마 변경"
+          >
+            {isDarkMode ? '🌞' : '🌙'}
+          </button>
+        </div>
+        <div className={`card calculator ${isDarkMode ? 'dark' : ''}`}>
           <div className="slider-container">
             <label>
               <span className="label-text">투자 금액</span>

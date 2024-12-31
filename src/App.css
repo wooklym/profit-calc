@@ -7,7 +7,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f7fa;
+  transition: background-color 0.3s ease;
+}
+
+/* 다크 테마 */
+body.dark-theme {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* 라이트 테마 */
+body.light-theme {
+  background-color: #f8fafc;
+  color: #1a1a1a;
 }
 
 .App {
@@ -22,9 +34,19 @@ body {
 }
 
 h1 {
-  color: #1a1a1a;
-  margin-bottom: 2rem;
+  margin: 0;
+  font-size: 2rem;
   font-weight: 700;
+}
+
+/* 다크모드 타이틀 색상 */
+.dark-theme h1 {
+  color: #f1f5f9;
+}
+
+/* 라이트모드 타이틀 색상 */
+.light-theme h1 {
+  color: #1a1a1a;
 }
 
 .card {
@@ -196,3 +218,115 @@ tr:hover {
     border-radius: 0;
   }
 }
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+  position: relative;
+}
+
+.theme-toggle {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.dark-theme .theme-toggle {
+  background-color: #1e293b;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.light-theme .theme-toggle {
+  background-color: #f8fafc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* 다크 테마 스타일 */
+.dark-theme .card {
+  background: #1e293b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .label-text {
+  color: #e2e8f0;
+}
+
+.dark-theme .value {
+  color: #60a5fa;
+}
+
+.dark-theme input[type="range"] {
+  background: #334155;
+}
+
+.dark-theme input[type="range"]::-webkit-slider-thumb {
+  background: #60a5fa;
+}
+
+.dark-theme .summary-card {
+  background: #334155;
+}
+
+.dark-theme .summary-card h3 {
+  color: #94a3b8;
+}
+
+.dark-theme .summary-card p {
+  color: #60a5fa;
+}
+
+.dark-theme .view-toggle button {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
+}
+
+.dark-theme .view-toggle button:hover {
+  background: #334155;
+}
+
+.dark-theme .view-toggle button.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.dark-theme table th {
+  background: #334155;
+  color: #94a3b8;
+}
+
+.dark-theme table td {
+  border-bottom: 1px solid #334155;
+  color: #e2e8f0;
+}
+
+.dark-theme .chart-container {
+  background: #1e293b;
+}
+
+/* 라이트 테마 스타일 */
+.light-theme .card {
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ... 나머지 라이트 테마 스타일 ... */
